@@ -3,9 +3,8 @@ const totalQuantity = document.getElementById("totalQuantity");
 const totalPrice = document.getElementById("totalPrice");
 const cartStorage = localStorage.getItem("cart");
 const cartElements = JSON.parse(cartStorage);
-const orderButton = document.getElementById('order');
+const orderButton = document.getElementById("order");
 let totalPr = 0;
-
 
 cartElements.forEach((element) => {
   const id = element.id;
@@ -14,10 +13,9 @@ cartElements.forEach((element) => {
   fetch(`http://localhost:3000/api/products/${id}`)
     .then((res) => res.json())
     .then((data) => {
-      totalPr += (data.price * element.quantity);
+      totalPr += data.price * element.quantity;
       totalPrice.textContent = totalPr;
-      displayData(data)
-    
+      displayData(data);
     });
   function displayData(kanap) {
     const { imageUrl, name, altTxt, price, description } = kanap;
@@ -62,95 +60,107 @@ cartElements.forEach((element) => {
         }
       });
     }
+    changeQuantity();
   }
 });
 
-function displayQuantity(){
+function displayQuantity() {
   // pour avoir la quantité totale
-  const total = cartElements.reduce(
-    (total, item) => total + item.quantity,
-    0
-    );
-    totalQuantity.textContent = total;
-  }
+  const total = cartElements.reduce((total, item) => total + item.quantity, 0);
+  totalQuantity.textContent = total;
+}
 
 displayQuantity();
 
-orderButton.addEventListener('click',()=>submitForm(event));
-
-
-function submitForm(event){
-  event.preventDefault();
- if(cartElements.length === 0) {
-   alert('Veuillez sélectionner des canapés à acheter');
-   return;
- }
- if (isFormInvalid())return;
- if(isEmailInvalid()) return;
-const body = makeRequestBody();
-fetch('http://localhost:3000/api/products/order',{
-  method : "POST",
-  body : JSON.stringify(body),
-  headers : {
-    "Content-type": "application/json"
+function changeQuantity() {
+  let inputs = document.getElementsByClassName("itemQuantity");
+  // modifier la fonction pour que la quantité soit modifier
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("change", () => {
+      const article = inputs[i].parentNode.parentNode.parentNode.parentNode;
+      const id = article.getAttribute("data-id");
+      const color = article.getAttribute("data-color");
+      var cart = JSON.parse(localStorage.getItem("cart"));
+      var item = cart.find((x) => x.id == id && x.color == color);
+      item.quantity = Number(inputs[i].value);
+      localStorage.setItem("cart", JSON.stringify(cart));
+    });
   }
-})
-.then((res) => res.json())
-.then((data)=> {
-  const orderId = data.orderId;
-  window.location.href="./confirmation.html" + "?orderId=" + orderId;
-  return console.log(data);
-})
-.catch((err)=> console.log(err));
-
 }
-function makeRequestBody(){
-  const form = document.querySelector('.cart__order__form');
+
+orderButton.addEventListener("click", () => submitForm(event));
+
+function submitForm(event) {
+  event.preventDefault();
+  if (cartElements.length === 0) {
+    alert("Veuillez sélectionner des canapés à acheter");
+    return;
+  }
+  if (isFormInvalid()) return;
+  if (isEmailInvalid()) return;
+  const body = makeRequestBody();
+  fetch("http://localhost:3000/api/products/order", {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      const orderId = data.orderId;
+      window.location.href = "./confirmation.html" + "?orderId=" + orderId;
+      return console.log(data);
+    })
+    .catch((err) => console.log(err));
+}
+function makeRequestBody() {
+  const form = document.querySelector(".cart__order__form");
   const firstName = form.elements.firstName.value;
   const lastName = form.elements.lastName.value;
   const address = form.elements.address.value;
   const city = form.elements.city.value;
   const email = form.elements.email.value;
   const body = {
-    contact : {
-      firstName : firstName,
-      lastName : lastName,
-      address : address,
-      city : city,
-      email : email,
+    contact: {
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      city: city,
+      email: email,
     },
-    products :getIdsFromCache() 
-  }
-   console.log(body);
+    products: getIdsFromCache(),
+  };
+  console.log(body);
   return body;
 }
 
-function getIdsFromCache(){
+function getIdsFromCache() {
   const numberOfProducts = cartElements.length;
-  const ids= [];
-  for (let i = 0; i < numberOfProducts; i++){
+  const ids = [];
+  for (let i = 0; i < numberOfProducts; i++) {
     ids.push(cartElements[i].id);
   }
   return ids;
 }
 
-function isFormInvalid(){
-  const form = document.querySelector('cart__order__form');
-  const inputs = document.querySelectorAll('input');
-  inputs.forEach((input)=> {
-    if (input.value ===""){
-      alert('Veuillez remplir les champs');
+function isFormInvalid() {
+  const form = document.querySelector("cart__order__form");
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach((input) => {
+    if (input.value === "") {
+      alert("Veuillez remplir les champs");
       return true;
     }
     return false;
-  })
+  });
 }
 
-function isEmailInvalid(){
-  const email = document.querySelector('#email').value;
+function isEmailInvalid() {
+  const email = document.querySelector("#email").value;
   const regex = /^[A-Za-z0-9+*_.-]+@(.+)$/;
-  if (regex.test(email)===false){
-    alert('Veuillez entrer un email valide');
+  if (regex.test(email) === false) {
+    alert("Veuillez entrer un email valide");
     return true;
   }
   return false;
