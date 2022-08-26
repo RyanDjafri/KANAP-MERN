@@ -1,3 +1,4 @@
+//constantes nécessaires pour la page
 const cartItems = document.getElementById("cart__items");
 const totalQuantity = document.getElementById("totalQuantity");
 const totalPrice = document.getElementById("totalPrice");
@@ -7,7 +8,7 @@ const orderButton = document.getElementById("order");
 const inputNames = ["firstName", "lastName"];
 const buttonCommander = document.getElementById("order");
 let totalPr = 0;
-
+// forEach du cart
 cartElements.forEach((element) => {
   const id = element.id;
   const color = element.color;
@@ -65,7 +66,7 @@ cartElements.forEach((element) => {
     changeQuantity();
   }
 });
-
+// fonction affichant la quantité du panier
 function displayQuantity() {
   // pour avoir la quantité totale
   const total = cartElements.reduce((total, item) => total + item.quantity, 0);
@@ -73,7 +74,7 @@ function displayQuantity() {
 }
 
 displayQuantity();
-
+//fonction calculant la nouvelle quantité et le prix lorsqu'on change la quantité
 function changeQuantity() {
   let inputs = document.getElementsByClassName("itemQuantity");
   // modifier la fonction pour que la quantité soit modifier
@@ -91,7 +92,7 @@ function changeQuantity() {
 }
 
 orderButton.addEventListener("click", () => submitForm(event));
-
+// fonction gerant le formulaire
 function submitForm(event) {
   event.preventDefault();
   if (cartElements.length === 0) {
@@ -145,10 +146,6 @@ function getIdsFromCache() {
   }
   return ids;
 }
-
-
-
-
 
 const firstName = document.getElementById("firstNameErrorMsg");
 const firstNameInput = document.getElementById("firstName");
