@@ -4,6 +4,8 @@ const totalPrice = document.getElementById("totalPrice");
 const cartStorage = localStorage.getItem("cart");
 const cartElements = JSON.parse(cartStorage);
 const orderButton = document.getElementById("order");
+const inputNames = ["firstName", "lastName"];
+const buttonCommander = document.getElementById("order");
 let totalPr = 0;
 
 cartElements.forEach((element) => {
@@ -144,24 +146,68 @@ function getIdsFromCache() {
   return ids;
 }
 
-function isFormInvalid() {
-  const form = document.querySelector("cart__order__form");
-  const inputs = document.querySelectorAll("input");
-  inputs.forEach((input) => {
-    if (input.value === "") {
-      alert("Veuillez remplir les champs");
-      return true;
-    }
-    return false;
-  });
-}
 
-function isEmailInvalid() {
-  const email = document.querySelector("#email").value;
-  const regex = /^[A-Za-z0-9+*_.-]+@(.+)$/;
-  if (regex.test(email) === false) {
-    alert("Veuillez entrer un email valide");
-    return true;
+
+
+
+const firstName = document.getElementById("firstNameErrorMsg");
+const firstNameInput = document.getElementById("firstName");
+firstNameInput.addEventListener("change", (e) => {
+  if (e.target.value === "") {
+    firstName.textContent = "Veuillez remplir ce champs";
+    buttonCommander.disabled = true;
+  } else {
+    firstName.textContent = "";
+    buttonCommander.disabled = false;
   }
-  return false;
-}
+});
+
+const lastName = document.getElementById("lastNameErrorMsg");
+const lastNameInput = document.getElementById("lastName");
+lastNameInput.addEventListener("change", (e) => {
+  if (e.target.value === "") {
+    lastName.textContent = "Veuillez remplir ce champs";
+    buttonCommander.disabled = true;
+  } else {
+    lastName.textContent = "";
+    buttonCommander.disabled = false;
+  }
+});
+
+const address = document.getElementById("addressErrorMsg");
+const addressInput = document.getElementById("address");
+addressInput.addEventListener("change", (e) => {
+  if (e.target.value === "") {
+    address.textContent = "Veuillez remplir ce champs";
+    buttonCommander.disabled = true;
+  } else {
+    address.textContent = "";
+    buttonCommander.disabled = false;
+  }
+});
+
+const city = document.getElementById("cityErrorMsg");
+const cityInput = document.getElementById("city");
+cityInput.addEventListener("change", (e) => {
+  if (e.target.value === "") {
+    city.textContent = "Veuillez remplir ce champs";
+    buttonCommander.disabled = true;
+  } else {
+    city.textContent = "";
+    buttonCommander.disabled = false;
+  }
+});
+
+const email = document.getElementById("emailErrorMsg");
+const emailInput = document.getElementById("email");
+emailInput.addEventListener("change", () => {
+  const regex = /^[A-Za-z0-9+*_.-]+@(.+)$/;
+
+  if (regex.test(emailInput.value) === false) {
+    email.textContent = "Veuillez entrez un email valide";
+    buttonCommander.disabled = true;
+  } else {
+    email.textContent = "";
+    buttonCommander.disabled = false;
+  }
+});
