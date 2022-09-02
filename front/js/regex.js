@@ -1,5 +1,6 @@
 const firstName = document.getElementById("firstNameErrorMsg");
 const firstNameInput = document.getElementById("firstName");
+
 firstNameInput.addEventListener("change", (e) => {
   if (e.target.value === "") {
     firstName.textContent = "Veuillez remplir ce champs";
@@ -12,6 +13,7 @@ firstNameInput.addEventListener("change", (e) => {
 
 const lastName = document.getElementById("lastNameErrorMsg");
 const lastNameInput = document.getElementById("lastName");
+
 lastNameInput.addEventListener("change", (e) => {
   if (e.target.value === "") {
     lastName.textContent = "Veuillez remplir ce champs";
@@ -24,6 +26,7 @@ lastNameInput.addEventListener("change", (e) => {
 
 const address = document.getElementById("addressErrorMsg");
 const addressInput = document.getElementById("address");
+
 addressInput.addEventListener("change", (e) => {
   if (e.target.value === "") {
     address.textContent = "Veuillez remplir ce champs";
@@ -48,7 +51,9 @@ cityInput.addEventListener("change", (e) => {
 
 const email = document.getElementById("emailErrorMsg");
 const emailInput = document.getElementById("email");
+
 emailInput.addEventListener("change", () => {
+  // regex vérifiant que l'email comporte les caractères requis pour une adresse email
   const regex = /^[A-Za-z0-9+*_.-]+@(.+)$/;
 
   if (regex.test(emailInput.value) === false) {
