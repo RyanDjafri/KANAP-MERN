@@ -9,7 +9,6 @@ const inputNames = ["firstName", "lastName"];
 const buttonCommander = document.getElementById("order");
 let totalPr = 0;
 
-
 // forEach du cart
 cartElements.forEach((element) => {
   const id = element.id;
@@ -22,13 +21,12 @@ cartElements.forEach((element) => {
       totalPrice.textContent = totalPr;
       displayData(data, quantity, color);
     });
-  
 });
 
 // Fonction permettant d'afficher un item dans la page panier
 function displayData(kanap, quantity, color) {
-    const { imageUrl, name, altTxt, price, description } = kanap;
-    const article = `
+  const { imageUrl, name, altTxt, price, description } = kanap;
+  const article = `
     <article class="cart__item" data-id="${kanap._id}" data-color="${color}">
                 <div class="cart__item__img">
                   <img src="${imageUrl}" alt="${altTxt}">
@@ -50,26 +48,26 @@ function displayData(kanap, quantity, color) {
                   </div>
                 </div>
               </article>`;
-    cartItems.innerHTML += article;
-    const deleteButtons = document.getElementsByClassName("deleteItem");
-    for (let i = 0; i < deleteButtons.length; i++) {
-      deleteButtons[i].addEventListener("click", () => {
-        const article =
-          deleteButtons[i].parentNode.parentNode.parentNode.parentNode;
-        const id = article.getAttribute("data-id");
-        const color = article.getAttribute("data-color");
+  cartItems.innerHTML += article;
+  const deleteButtons = document.getElementsByClassName("deleteItem");
+  for (let i = 0; i < deleteButtons.length; i++) {
+    deleteButtons[i].addEventListener("click", () => {
+      const article =
+        deleteButtons[i].parentNode.parentNode.parentNode.parentNode;
+      const id = article.getAttribute("data-id");
+      const color = article.getAttribute("data-color");
 
-        article.remove();
+      article.remove();
 
-        var items = JSON.parse(localStorage.getItem("cart"));
-        var index = items.findIndex((x) => x.id == id && x.color == color);
-        if (index >= 0) {
-          items.splice(index, 1);
-          localStorage.setItem("cart", JSON.stringify(items));
-        }
-      });
-    }
-    changeQuantity();
+      var items = JSON.parse(localStorage.getItem("cart"));
+      var index = items.findIndex((x) => x.id == id && x.color == color);
+      if (index >= 0) {
+        items.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(items));
+      }
+    });
+  }
+  changeQuantity();
 }
 
 // fonction affichant la quantité du panier
@@ -107,16 +105,16 @@ function submitForm(event) {
     alert("Veuillez sélectionner des canapés à acheter");
     return;
   }
-//   if (isFormInvalid()) return; STILL USED ?
-//   if (isEmailInvalid()) return; STILL USED ?
-    const body = makeRequestBody();
-    fetch("http://localhost:3000/api/products/order", {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-        "Content-type": "application/json",
-        },
-    })
+  //   if (isFormInvalid()) return; STILL USED ?
+  //   if (isEmailInvalid()) return; STILL USED ?
+  const body = makeRequestBody();
+  fetch("http://localhost:3000/api/products/order", {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
     .then((res) => res.json())
     .then((data) => {
       const orderId = data.orderId;
@@ -127,33 +125,31 @@ function submitForm(event) {
 }
 
 function makeRequestBody() {
-    const form = document.querySelector(".cart__order__form");
-    const firstName = form.elements.firstName.value;
-    const lastName = form.elements.lastName.value;
-    const address = form.elements.address.value;
-    const city = form.elements.city.value;
-    const email = form.elements.email.value;
-    const body = {
+  const form = document.querySelector(".cart__order__form");
+  const firstName = form.elements.firstName.value;
+  const lastName = form.elements.lastName.value;
+  const address = form.elements.address.value;
+  const city = form.elements.city.value;
+  const email = form.elements.email.value;
+  const body = {
     contact: {
-        firstName: firstName,
-        lastName: lastName,
-        address: address,
-        city: city,
-        email: email,
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      city: city,
+      email: email,
     },
     products: getIdsFromCache(),
-    };
-    console.log(body);
-    return body;
+  };
+
+  return body;
 }
 
 function getIdsFromCache() {
-    const numberOfProducts = cartElements.length;
-    const ids = [];
-    for (let i = 0; i < numberOfProducts; i++) {
+  const numberOfProducts = cartElements.length;
+  const ids = [];
+  for (let i = 0; i < numberOfProducts; i++) {
     ids.push(cartElements[i].id);
-    }
-    return ids;
+  }
+  return ids;
 }
-
-

@@ -10,38 +10,36 @@ const urlParams = new URLSearchParams(currentUrl);
 const id = urlParams.get("id");
 const apiUrl = `http://localhost:3000/api/products/${id}`;
 
-
-if(!id) {
-    // Alert then redirect to 404 or homepage
-    alert('Pas d\'id spécifié');
-    window.location.href = './index.html';
+if (!id) {
+  // Alert then redirect to 404 or homepage
+  alert("Pas d'id spécifié");
+  window.location.href = "./index.html";
 }
 
 // fetch de l'api en fonction de l'id du canapé
 
-const getData = function(url) {
-    fetch(url)
-        .then((res) => res.json())
-        .then((data) => displayKanap(data))
-    ;
+const getData = function (url) {
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayKanap(data));
 };
 getData(apiUrl);
 
 // fonction affichant le canapé voulu appeler par l'api
 const displayKanap = (kanap) => {
-    itemImg.innerHTML = `
+  itemImg.innerHTML = `
         <img src="${kanap.imageUrl}" alt="${kanap.altTxt}">
     `;
-    title.textContent = kanap.name;
-    price.textContent = kanap.price;
-    description.textContent = kanap.description;
-    const colors = kanap.colors;
+  title.textContent = kanap.name;
+  price.textContent = kanap.price;
+  description.textContent = kanap.description;
+  const colors = kanap.colors;
 
-    colors.forEach((color) => {
-        select.innerHTML += `
+  colors.forEach((color) => {
+    select.innerHTML += `
             <option value=${color}>${color}</option>
         `;
-    });
+  });
 };
 
 button.addEventListener("click", handleClick);
@@ -54,26 +52,26 @@ function handleClick() {
   saveOrder(color, quantity);
 }
 
-
 // function enregistrant le canapé, son id, sa couleur, et sa quantité dans le localStorage
 function saveOrder(color, quantity) {
+  let cart = localStorage.getItem("cart");
+  const data = {
+    id: id,
+    color: color,
+    quantity: Number(quantity),
+  };
+  if (!cart) {
+    cart = [];
+    cart.push(data);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  } else {
+    let cartStorage = JSON.parse(cart);
+    cartStorage.length !== 0
+      ? addCartItem(cartStorage, data)
+      : cartStorage.push(data);
 
-    let cart = localStorage.getItem("cart");
-    const data = {
-        id: id,
-        color: color,
-        quantity: Number(quantity),
-    };
-    if (!cart) {
-        cart = [];
-        cart.push(data);
-        localStorage.setItem("cart", JSON.stringify(cart));
-    } else {
-        let cartStorage = JSON.parse(cart)
-        cartStorage.length !== 0 ? addCartItem(cartStorage, data) : cartStorage.push(data) ;
-        
-        localStorage.setItem("cart", JSON.stringify(cartStorage));
-    }
+    localStorage.setItem("cart", JSON.stringify(cartStorage));
+  }
 }
 
 // fonction verifiant si la commande est passée et respecte les conditions
@@ -89,17 +87,16 @@ function checkOrder(color, quantity) {
 }
 // fonction additionnant les lignes identiques dans le localStorage
 function addCartItem(cartStorage, data) {
-    console.log('addCartItem')
-    // si on retrouve l'id et la couleur pour un meme item on modifie sa quantité sinon on ajoute l'item
-    for (let i = 0; i < cartStorage.length; i++) {
+  // si on retrouve l'id et la couleur pour un meme item on modifie sa quantité sinon on ajoute l'item
+  for (let i = 0; i < cartStorage.length; i++) {
     if (data.id === cartStorage[i].id && data.color === cartStorage[i].color) {
-        cartStorage[i].quantity = data.quantity + cartStorage[i].quantity;
-        break;
+      cartStorage[i].quantity = data.quantity + cartStorage[i].quantity;
+      break;
     }
     if (i === cartStorage.length - 1) {
-        cartStorage.push(data);
-        break;
+      cartStorage.push(data);
+      break;
     }
-    }
-    return cartStorage;
+  }
+  return cartStorage;
 }
