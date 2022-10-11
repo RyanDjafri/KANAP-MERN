@@ -1,5 +1,26 @@
 const firstName = document.getElementById("firstNameErrorMsg");
 const firstNameInput = document.getElementById("firstName");
+const lastName = document.getElementById("lastNameErrorMsg");
+const lastNameInput = document.getElementById("lastName");
+const address = document.getElementById("addressErrorMsg");
+const addressInput = document.getElementById("address");
+const city = document.getElementById("cityErrorMsg");
+const cityInput = document.getElementById("city");
+const email = document.getElementById("emailErrorMsg");
+const emailInput = document.getElementById("email");
+
+orderButton.addEventListener("click", (e) => {
+  e.preventDefault();
+
+if (!firstNameInput.value){
+  
+}
+
+
+
+
+
+});
 
 firstNameInput.addEventListener("change", (e) => {
   if (e.target.value === "") {
@@ -11,9 +32,6 @@ firstNameInput.addEventListener("change", (e) => {
   }
 });
 
-const lastName = document.getElementById("lastNameErrorMsg");
-const lastNameInput = document.getElementById("lastName");
-
 lastNameInput.addEventListener("change", (e) => {
   if (e.target.value === "") {
     lastName.textContent = "Veuillez remplir ce champs";
@@ -23,9 +41,6 @@ lastNameInput.addEventListener("change", (e) => {
     buttonCommander.disabled = false;
   }
 });
-
-const address = document.getElementById("addressErrorMsg");
-const addressInput = document.getElementById("address");
 
 addressInput.addEventListener("change", (e) => {
   if (e.target.value === "") {
@@ -37,8 +52,6 @@ addressInput.addEventListener("change", (e) => {
   }
 });
 
-const city = document.getElementById("cityErrorMsg");
-const cityInput = document.getElementById("city");
 cityInput.addEventListener("change", (e) => {
   if (e.target.value === "") {
     city.textContent = "Veuillez remplir ce champs";
@@ -48,9 +61,6 @@ cityInput.addEventListener("change", (e) => {
     buttonCommander.disabled = false;
   }
 });
-
-const email = document.getElementById("emailErrorMsg");
-const emailInput = document.getElementById("email");
 
 emailInput.addEventListener("change", () => {
   // regex vérifiant que l'email comporte les caractères requis pour une adresse email

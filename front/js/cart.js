@@ -6,7 +6,7 @@ const cartStorage = localStorage.getItem("cart");
 const cartElements = JSON.parse(cartStorage);
 const orderButton = document.getElementById("order");
 const inputNames = ["firstName", "lastName"];
-const buttonCommander = document.getElementById("order");
+
 let totalPr = 0;
 
 // forEach du cart
@@ -90,7 +90,6 @@ function changeQuantity() {
       const id = article.getAttribute("data-id");
       const color = article.getAttribute("data-color");
       var cart = JSON.parse(localStorage.getItem("cart"));
-      console.log(inputs[i].value);
       if (inputs[i].value == 0) {
         let index = cart.findIndex((x) => x.id == id && x.color == color);
         cart.splice(index, 1);
@@ -113,8 +112,7 @@ function submitForm(event) {
     alert("Veuillez sélectionner des canapés à acheter");
     return;
   }
-  //   if (isFormInvalid()) return; STILL USED ?
-  //   if (isEmailInvalid()) return; STILL USED ?
+
   const body = makeRequestBody();
   fetch("http://localhost:3000/api/products/order", {
     method: "POST",
