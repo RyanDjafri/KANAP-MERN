@@ -64,6 +64,7 @@ function saveOrder(color, quantity) {
     cart = [];
     cart.push(data);
     localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Canapé(s) ajouté au panier");
   } else {
     let cartStorage = JSON.parse(cart);
     cartStorage.length !== 0
@@ -71,6 +72,7 @@ function saveOrder(color, quantity) {
       : cartStorage.push(data);
 
     localStorage.setItem("cart", JSON.stringify(cartStorage));
+    alert("Canapé(s) ajouté au panier");
   }
 }
 

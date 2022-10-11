@@ -58,7 +58,7 @@ function displayData(kanap, quantity, color) {
       const color = article.getAttribute("data-color");
 
       article.remove();
-
+      window.location.reload();
       var items = JSON.parse(localStorage.getItem("cart"));
       var index = items.findIndex((x) => x.id == id && x.color == color);
       if (index >= 0) {
@@ -67,6 +67,7 @@ function displayData(kanap, quantity, color) {
       }
     });
   }
+
   changeQuantity();
 }
 
@@ -92,6 +93,7 @@ function changeQuantity() {
       var item = cart.find((x) => x.id == id && x.color == color);
       item.quantity = Number(inputs[i].value);
       localStorage.setItem("cart", JSON.stringify(cart));
+      window.location.reload();
     });
   }
 }
