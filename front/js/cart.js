@@ -90,8 +90,14 @@ function changeQuantity() {
       const id = article.getAttribute("data-id");
       const color = article.getAttribute("data-color");
       var cart = JSON.parse(localStorage.getItem("cart"));
-      var item = cart.find((x) => x.id == id && x.color == color);
-      item.quantity = Number(inputs[i].value);
+      console.log(inputs[i].value);
+      if (inputs[i].value == 0) {
+        let index = cart.findIndex((x) => x.id == id && x.color == color);
+        cart.splice(index, 1);
+      } else {
+        var item = cart.find((x) => x.id == id && x.color == color);
+        item.quantity = Number(inputs[i].value);
+      }
       localStorage.setItem("cart", JSON.stringify(cart));
       window.location.reload();
     });
