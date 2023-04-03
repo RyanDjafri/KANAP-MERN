@@ -1,9 +1,11 @@
 import React from "react";
-
+import Navbar from "../components/Divs/Navbar";
+import KanapSection from "../components/Kanap/KanapSection";
 const Home = () => {
   return (
-    <div>
-      <h2>Home Page After Connection</h2>
+    <div className="home-page">
+      <Navbar />
+      <KanapSection />
     </div>
   );
 };
