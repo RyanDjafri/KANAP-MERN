@@ -18,11 +18,11 @@ const KanapSection = () => {
           <h1>Nos produits</h1>
           <h2>Une gamme d'articles exclusifs</h2>
         </div>
-       
+        <section className="items" id="items">
           {kanaps.map((kanap) => {
             return <KanapCard key={kanap._id} kanap={kanap} />;
           })}
-        
+        </section>
       </div>
     </main>
   );
