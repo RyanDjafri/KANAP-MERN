@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const SignUp = () => {
+  // check infos, valid email, password ...
   const [submitForm, setSubmitForm] = useState(false);
   const [pseudo, setPseudo] = useState("");
   const [email, setEmail] = useState("");
@@ -12,12 +13,12 @@ const SignUp = () => {
     const pseudoError = document.getElementById("pseudo-error");
     const emailError = document.getElementById("email-error");
     const passwordError = document.getElementById("password-error");
-    if (pseudo.length <= 3) {
-      pseudoError.textContent = "Minimum length : 4";
+    if (pseudo.length >= 3) {
+      pseudoError.textContent = "Please, enter a valid pseudo";
     } else {
-      passwordError.textContent = "";
+      pseudoError.textContent = "";
     }
-    if (regex.test(email.value) === false) {
+    if (regex.test(email) === false) {
       emailError.textContent = "Please, enter a valid email";
     } else {
       emailError.textContent = "";

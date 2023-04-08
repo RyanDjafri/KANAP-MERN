@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const SignIn = () => {
+  // check infos before signing in
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

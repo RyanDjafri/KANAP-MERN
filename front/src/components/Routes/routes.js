@@ -6,6 +6,7 @@ import Register from "../../pages/Register";
 import PageError from "../../pages/PageError";
 import KanapPage from "../../pages/KanapPage";
 import axios from "axios";
+import CartPage from "../../pages/CartPage";
 
 const Router = () => {
   const [kanaps, setKanaps] = useState([]);
@@ -33,7 +34,7 @@ const Router = () => {
               ></Route>
             );
           })}
-          {/* <Route path="/:id" element={<KanapPage />}></Route> */}
+          <Route path="/cart" element={<CartPage />}></Route>
           <Route path="/*" element={<PageError />}></Route>
         </Routes>
       </BrowserRouter>
