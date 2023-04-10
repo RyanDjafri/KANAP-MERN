@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Divs/Navbar";
 import CartKanap from "../components/Cart/CartKanap";
+import calculPrice from "../components/Utils/calculPrice";
 
 const CartPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -10,7 +11,18 @@ const CartPage = () => {
   const [email, setEmail] = useState("");
   const cartStorage = localStorage.getItem("cart");
   const cartElements = JSON.parse(cartStorage);
+  function displayQuantity() {
+    const totalQuantity = document.getElementById("totalQuantity");
+    const total = cartElements.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+    totalQuantity.textContent = total;
+  }
 
+  useEffect(() => {
+    displayQuantity();
+  }, []);
   return (
     <div>
       <Navbar />

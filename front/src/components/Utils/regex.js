@@ -58,7 +58,7 @@ export default function checkForm() {
   });
 
   emailInput.addEventListener("change", () => {
-    // regex vérifiant que l'email comporte les caractères requis pour une adresse email
+    
     const regex = /^[A-Za-z0-9+*_.-]+@(.+)$/;
 
     if (regex.test(emailInput.value) === false) {
