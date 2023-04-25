@@ -8,30 +8,9 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const checkInfos = () => {
-    const regex = /^[A-Za-z0-9+*_.-]+@(.+)$/;
-    const pseudoError = document.getElementById("pseudo-error");
-    const emailError = document.getElementById("email-error");
-    const passwordError = document.getElementById("password-error");
-    if (pseudo.length >= 3) {
-      pseudoError.textContent = "Please, enter a valid pseudo";
-    } else {
-      pseudoError.textContent = "";
-    }
-    if (regex.test(email) === false) {
-      emailError.textContent = "Please, enter a valid email";
-    } else {
-      emailError.textContent = "";
-    }
-    if (password !== confirmPassword || password.length <= 3) {
-      passwordError.textContent = "Incorrect Password!";
-    } else {
-      passwordError.textContent = "";
-    }
-  };
+
   const createAccount = (e) => {
     e.preventDefault();
-    checkInfos();
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/user/register`,
