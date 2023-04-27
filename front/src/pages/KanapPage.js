@@ -45,6 +45,7 @@ const KanapPage = () => {
     const data = {
       id: setId(),
       color: color,
+      price: kanaps.price,
       quantity: Number(quantity),
     };
     if (!cart) {
