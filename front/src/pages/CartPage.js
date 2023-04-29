@@ -86,16 +86,18 @@ const CartPage = () => {
   function displayQuantity() {
     const totalQuantity = document.getElementById("totalQuantity");
     const totalPrice = document.getElementById("totalPrice");
-    const total = cartElements.reduce(
-      (total, item) => total + item.quantity,
-      0
-    );
-    const totalPr = cartElements.reduce(
-      (total, item) => total + item.quantity * item.price,
-      0
-    );
-    totalPrice.textContent = totalPr;
-    totalQuantity.textContent = total;
+    if (cartElements) {
+      const total = cartElements.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
+      const totalPr = cartElements.reduce(
+        (total, item) => total + item.quantity * item.price,
+        0
+      );
+      totalPrice.textContent = totalPr;
+      totalQuantity.textContent = total;
+    }
   }
   const sendForm = (e) => {
     e.preventDefault();
@@ -144,9 +146,19 @@ const CartPage = () => {
             <h1>Votre panier</h1>
             <section className="cart">
               <section id="cart__items">
-                {cartElements.map((element) => {
-                  return <CartKanap element={element} key={element.id} />;
-                })}
+                <>
+                  {cartElements ? (
+                    <>
+                      {cartElements.map((element) => {
+                        return <CartKanap element={element} key={element.id} />;
+                      })}
+                    </>
+                  ) : (
+                    <>
+                      <h2>No Item</h2>
+                    </>
+                  )}
+                </>
               </section>
               <div className="cart__price">
                 <p>
